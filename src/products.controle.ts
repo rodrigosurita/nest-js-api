@@ -2,39 +2,36 @@ import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common"
 import { throws } from "assert";
 import { timingSafeEqual } from "crypto";
 import { Product } from './product.model';
+import { ProductsService } from "./products.service";
 
 @Controller('products')
 export class ProductsController {
-    products: Product[] = [
-        new Product('B01', 'JS Book', 29.90),
-        new Product('B02', 'AI Book', 8.90),
-        new Product('B03', 'TS Book', 39.90)
-    ];
+
+    constructor(private productsService: ProductsService){}
 
     @Get()
     getAll(): Product[]{
-        return this.products;
+        return this.productsService.getAll();
     }
 
     @Get(':id')
     getOne(@Param() params): Product{
-        return this.products[0];
+        return this.productsService.getOne(params.id)
     }
 
     @Post()
     create(@Body() product: Product) {
-        product.id = 100;
-        this.products.push(product);
+        this.productsService.create(product);
     }
 
     @Put()
     alter(@Body() product: Product): Product{
-        return product;
+        return this.productsService.alter(product);
     }
 
     @Delete(':id')
     delete(@Param() params){
-        this.products.pop();
+        this.productsService.delete(params.id);
     }
 
 }
