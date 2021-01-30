@@ -16,14 +16,12 @@ export class ProductsController {
     @Post()
     create(@Body() product): string{
         console.log(product);
-        
         return 'product created';
     }
 
     @Put()
     alter(@Body() product): string{
         console.log(product);
-        
         return 'product updated';
     }
 
