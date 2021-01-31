@@ -32,6 +32,8 @@ export class ProductsService {
 
     async delete(id: number) {
         const product: Product = await this.getOne(id);
-        product.destroy();
+        if(product){
+            product.destroy();
+        }
     }
 }
